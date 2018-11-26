@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.weather.dao.IconDao">
+
+    <select id="getList" resultType="com.kk.weather.entity.Icon">
+        select *
+        from icon
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="iconId"
+            keyColumn="icon_id" parameterType="com.kk.weather.entity.Icon">
+        INSERT INTO
+        icon
+        (user_id, picture_id)
+        values
+        (#{userId},#{pictureId})
+    </insert>
+
+    <update id="modify" parameterType="com.kk.weather.entity.Icon">
+        UPDATE icon
+        <set>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="pictureId!=null">picture_id=#{pictureId}</if>
+        </set>
+        WHERE icon_id=#{iconId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM
+        icon
+        WHERE  icon_id=#{id}
+    </delete>
+
+    <select id="get" resultType="com.kk.weather.entity.Icon">
+        select * from icon
+        where icon_id=#{id}
+    </select>
+</mapper>

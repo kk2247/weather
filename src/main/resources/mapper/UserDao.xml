@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.weather.dao.UserDao">
+    <select id="getUserByAccountAndPassword" resultType="com.kk.weather.entity.User">
+        select * from
+        user
+        where account=#{account} and password=#{password}
+    </select>
+
+    <select id="getUserByAccountAndEmail" resultType="com.kk.weather.entity.User">
+        select * from
+        user
+        where account=#{account} and email=#{email}
+    </select>
+
+    <select id="getList" resultType="com.kk.weather.entity.User">
+        select *
+        from user
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="userId"
+            keyColumn="user_id" parameterType="com.kk.weather.entity.User">
+        INSERT INTO
+        user
+        (nick_name,account, password, constellation, email)
+        values
+        (#{nickName},#{account},#{password},#{constellation},#{email})
+    </insert>
+
+    <update id="modify" parameterType="com.kk.weather.entity.User">
+        UPDATE user
+        <set>
+            <if test="nickName!=null">nick_name=#{nickName},</if>
+            <if test="account!=null">account=#{account},</if>
+            <if test="password!=null">password=#{password},</if>
+            <if test="constellation!=null">constellation=#{constellation},</if>
+            <if test="email!=null">email=#{email}</if>
+        </set>
+        WHERE user_id=#{userId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM
+        user
+        WHERE  user_id=#{userId}
+    </delete>
+
+    <select id="get" resultType="com.kk.weather.entity.User">
+        select * from user
+        where user_id=#{id}
+    </select>
+
+    <select id="getIdByEmail"  resultType="Integer">
+        select user_id
+        from user
+        where email=#{email}
+    </select>
+</mapper>

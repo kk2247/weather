@@ -1,0 +1,22 @@
+server:
+  port: 8099
+  servlet:
+    context-path: /weather
+
+jdbc:
+  driver: com.mysql.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/weather?useUnicode=true&characterEncoding=utf8&useSSL=false
+  username: root
+  password: root
+
+#Mybatis
+mybatis_config_file: mybatis-config.xml
+mapper_path: /mapper/**.xml
+entity_package: com.kk.weather.entity
+
+#spring:
+ # resources:
+  #  static-locations: classpath:/static
+  #mvc:
+   #  suffix: .jsp
+  #  prefix: /demo/

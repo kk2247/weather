@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.weather.dao.PictureDao">
+    <select id="getPicByTypeAndMood" resultType="com.kk.weather.entity.Picture">
+        select * from
+        picture
+        where picture_type=#{pictureType} and mood=#{mood}
+    </select>
+
+    <select id="getPicByTypeAndCatalogue" resultType="com.kk.weather.entity.Picture">
+        select * from
+        picture
+        where picture_type=#{pictureType} and catalogue=#{catalogue}
+    </select>
+
+    <select id="getList" resultType="com.kk.weather.entity.Picture">
+        select *
+        from picture
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="pictureId"
+            keyColumn="picture_id" parameterType="com.kk.weather.entity.Picture">
+        INSERT INTO
+        picture
+        (picture_type,mood,path,catalogue)
+        values
+        (#{pictureType},#{mood},#{path},#{catalogue})
+    </insert>
+
+    <update id="modify" parameterType="com.kk.weather.entity.Picture">
+        UPDATE picture
+        <set>
+            <if test="pictureType!=null">picture_type=#{pictureType},</if>
+            <if test="mood!=null">mood=#{mood},</if>
+            <if test="path!=null">path=#{path},</if>
+            <if test="catalogue!=null">catalogue=#{catalogue}</if>
+        </set>
+        WHERE picture_id=#{pictureId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM
+        picture
+        WHERE  picture_id=#{id}
+    </delete>
+
+    <select id="get" resultType="com.kk.weather.entity.Picture">
+        select * from picture
+        where picture_id=#{id}
+    </select>
+</mapper>
