@@ -1,5 +1,9 @@
 package com.kk.weather.entity;
-
+/**
+ *
+ * @author KGZ
+ * @date 2018/11/26
+ */
 public class Picture {
 
     private int pictureId;

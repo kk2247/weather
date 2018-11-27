@@ -57,4 +57,10 @@
         from user
         where email=#{email}
     </select>
+
+    <select id="getUserByAccount"  resultType="com.kk.weather.entity.User">
+        select *
+        from user
+        where account=#{account}
+    </select>
 </mapper>

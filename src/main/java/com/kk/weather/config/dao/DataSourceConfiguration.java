@@ -8,10 +8,12 @@ import org.springframework.context.annotation.Configuration;
 
 import java.beans.PropertyVetoException;
 
-//为数据库连接提供服务
-//告诉spring容器需要来到这个类下面检索相关的bean
+/**
+ *
+ * @author KGZ
+ * @date 2018/11/26
+ */
 @Configuration
-//配置Mybatis mapper的扫描路径
 @MapperScan("com.kk.weather.dao")
 public class DataSourceConfiguration {
 //    将对应的变量从配置文件中引入进来

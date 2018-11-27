@@ -13,16 +13,16 @@
             keyColumn="icon_id" parameterType="com.kk.weather.entity.Icon">
         INSERT INTO
         icon
-        (user_id, picture_id)
+        (user_id,path)
         values
-        (#{userId},#{pictureId})
+        (#{userId},#{path})
     </insert>
 
     <update id="modify" parameterType="com.kk.weather.entity.Icon">
         UPDATE icon
         <set>
             <if test="userId!=null">user_id=#{userId},</if>
-            <if test="pictureId!=null">picture_id=#{pictureId}</if>
+            <if test="path!=null">path=#{path}</if>
         </set>
         WHERE icon_id=#{iconId}
     </update>

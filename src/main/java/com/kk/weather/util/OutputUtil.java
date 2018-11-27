@@ -2,7 +2,11 @@ package com.kk.weather.util;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *
+ * @author KGZ
+ * @date 2018/11/26
+ */
 public class OutputUtil {
     WeatherUtils weatherUtils=new WeatherUtils();
 

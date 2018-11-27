@@ -12,17 +12,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * @ClassName WeatherUtils
- * @Description TODO 天气信息数据来源(http://www.webxml.com.cn/) 
- * 根据城市或地区名称查询获得未来三天内天气情况、现在的天气实况、天气和生活指数: 
- * 调用方法如下：输入参数：theCityName = 城市中文名称(国外城市可用英文)或城市<span class="wp_keywordlink" style="margin: 0px; padding: 0px; border: 0px; background-color: transparent;"><a target=_blank href="http://www.xuebuyuan.com/" title="代码" target="_blank" style="text-decoration: none; color: rgb(1, 150, 227);">代码</a></span>(不输入默认为上海市)，如：上海 或 58367，如有 
- * 城市名称重复请使用城市代码查询(可通过 getSupportCity 或 getSupportDataSet 获得)；返回数据： 一个一维数组 String(22)，共有 
- * 23个元素。String(0) 到 String(4)：省份，城市，城市代码，城市图片名称，最后更新时间。String(5) 到 String(11)：当天的 气温， 
- * 概况，风向和风力，天气趋势开始图片名称(以下称：图标一)，天气趋势结束图片名称(以下称：图标二)，现在的天气实况，天气和生活 
- * 指数。String(12) 到String(16)：第二天的 气温，概况，风向和风力，图标一，图标二。String(17) 到 String(21)：第三天的 气温， 
- * 概况，风向和风力，图标一，图标二。String(22) 被查询的城市或地区的介绍 
- * @author zyj jayzh1993@gmail.com 
- * @date 2013-10-14 
+ *
+ * @author KGZ
+ * @date 2018/11/26
  */
 public class WeatherUtils {
 

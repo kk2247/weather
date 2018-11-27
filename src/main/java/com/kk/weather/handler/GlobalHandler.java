@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
+/**
+ *
+ * @author KGZ
+ * @date 2018/11/26
+ */
 @ControllerAdvice
 public class GlobalHandler {
     @ExceptionHandler(value = Exception.class)
