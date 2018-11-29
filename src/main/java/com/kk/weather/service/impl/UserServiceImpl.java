@@ -3,8 +3,6 @@ package com.kk.weather.service.impl;
 import com.kk.weather.dao.IconDao;
 import com.kk.weather.dao.PictureDao;
 import com.kk.weather.dao.UserDao;
-import com.kk.weather.entity.Icon;
-import com.kk.weather.entity.Picture;
 import com.kk.weather.entity.User;
 import com.kk.weather.service.UserService;
 import com.kk.weather.util.PictureUtil;
@@ -14,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 
 /**
@@ -23,7 +20,7 @@ import java.io.*;
  * @date 2018/11/27
  */
 @Service
-//@Transactional(rollbackForClassName={"Exception"})
+@Transactional
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -38,12 +35,12 @@ public class UserServiceImpl implements UserService {
     private PictureUtil pictureUtil=new PictureUtil();
 
     @Override
-    public boolean loginIn(String account, String password) {
+    public int loginIn(String account, String password) {
         User user=userDao.getUserByAccountAndPassword(account,password);
         if(user!=null){
-            return true;
+            return user.getUserId();
         }
-        return false;
+        return -1;
     }
 
     @Override

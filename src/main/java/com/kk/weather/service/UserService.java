@@ -1,6 +1,5 @@
 package com.kk.weather.service;
 
-import com.kk.weather.entity.Icon;
 import com.kk.weather.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @Service
 public interface UserService {
-    boolean loginIn(String account ,String password);
+    int loginIn(String account , String password);
     //boolean loginOut();
     int register(User user);
     boolean fillInformation(User user, MultipartFile file);

@@ -35,7 +35,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void register() {
+    public void register() throws IOException {
         User user=new User();
         user.setAccount("1234");
         user.setPassword("4321");
