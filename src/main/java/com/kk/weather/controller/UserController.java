@@ -10,8 +10,8 @@ import com.kk.weather.entity.User;
 import com.kk.weather.service.UserService;
 import com.kk.weather.util.PasswordUtil;
 import com.sun.deploy.net.HttpResponse;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +37,10 @@ public class UserController {
      */
     private PasswordUtil passwordUtil=new PasswordUtil();
 
+    /**
+     * 测试ajax用例
+     * @return
+     */
     @RequestMapping(value = "/test",method = RequestMethod.GET)
     public String test(){
         Map<String,Object> map=new HashMap<>();
@@ -116,7 +120,7 @@ public class UserController {
      * @param email
      * @return
      */
-    @RequestMapping(value = "/infomation",method = RequestMethod.POST)
+    @RequestMapping(value = "/information",method = RequestMethod.POST)
     public String infomation(String account,@RequestParam(value = "nickName",required = false) String nickName
                              ,@RequestParam(value = "password",required = false) String password,
                              @RequestParam(value = "constellation",required = false)String constellation,
@@ -140,5 +144,60 @@ public class UserController {
 
     }
 
+    /**
+     * 用户改变头像
+     * @param userId
+     * @param file
+     * @return
+     */
+    @RequestMapping(value = "/icon",method = RequestMethod.POST)
+    public String icon(@RequestParam(value = "account",required = false) String account,
+                       @RequestParam(value = "userId",required = false) int userId,MultipartFile file){
+        Map<String ,Object> map=new HashMap<>();
+        User user=new User();
+        Gson gson=new Gson();
+        if(userId<=0){
+            if(StringUtils.isEmpty(account)==false){
+                user.setAccount(account);
+            }else{
+                map.put("sucess","illegality");
+                return "("+gson.toJson(map)+")";
+            }
+        }else{
+            user.setUserId(userId);
+        }
+        boolean success=userService.modifyIcon(user,file);
+        if(success==false){
+            map.put("sucess","false");
+        }else{
+            map.put("sucess","true");
+        }
+        return "("+gson.toJson(map)+")";
+    }
+
+    /*
+    @RequestMapping(value = "/out",method = RequestMethod.GET)
+    public String out(HttpServletRequest request){
+        Map<String,Object> map=new HashMap<>();
+        Gson gson =new Gson();
+        Cookie[] cookies = request.getCookies();
+        if (null==cookies) {
+            System.out.println("没有cookie==============");
+        } else {
+            for(Cookie cookie : cookies){
+                if(cookie.getName().equals(name)){
+                    cookie.setValue(null);
+                    cookie.setMaxAge(0);// 立即销毁cookie
+                    cookie.setPath("/");
+                    System.out.println("被删除的cookie名字为:"+cookie.getName());
+                    response.addCookie(cookie);
+                    break;
+                }
+            }
+        }
+        map.put("sucess","true");
+        return "("+gson.toJson(map)+")";
+    }
+    */
 
 }
