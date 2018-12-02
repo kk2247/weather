@@ -175,19 +175,29 @@ public class UserController {
         return "("+gson.toJson(map)+")";
     }
 
-    /*
+
+    /**
+     * 对用户进行登出操作，清除cookies
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(value = "/out",method = RequestMethod.GET)
-    public String out(HttpServletRequest request){
+    public String out(HttpServletRequest request,HttpServletResponse response){
         Map<String,Object> map=new HashMap<>();
         Gson gson =new Gson();
         Cookie[] cookies = request.getCookies();
         if (null==cookies) {
             System.out.println("没有cookie==============");
+            map.put("sucess","failed");
         } else {
             for(Cookie cookie : cookies){
-                if(cookie.getName().equals(name)){
+                if(cookie.getName().equals("account")||
+                        cookie.getName().equals("password")||
+                        cookie.getName().equals("userState")||
+                        cookie.getName().equals("id")){
                     cookie.setValue(null);
-                    cookie.setMaxAge(0);// 立即销毁cookie
+                    cookie.setMaxAge(0);
                     cookie.setPath("/");
                     System.out.println("被删除的cookie名字为:"+cookie.getName());
                     response.addCookie(cookie);
@@ -198,6 +208,6 @@ public class UserController {
         map.put("sucess","true");
         return "("+gson.toJson(map)+")";
     }
-    */
+
 
 }

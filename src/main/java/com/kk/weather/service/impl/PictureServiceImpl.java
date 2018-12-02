@@ -18,11 +18,6 @@ import java.util.List;
  * @author KGZ
  * @date 2018/11/28 10:15
  */
-
-/**
- *@Transactional
- */
-
 @Service
 public class PictureServiceImpl implements PictureService {
 
@@ -42,6 +37,7 @@ public class PictureServiceImpl implements PictureService {
      */
     private String dir=pictureUtil.dir;
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean insertPicture(MultipartFile file, Picture picture){
         try{
@@ -49,20 +45,35 @@ public class PictureServiceImpl implements PictureService {
                 throw new Exception("没有添加文件信息");
             }
             int pictureId=pictureDao.insert(picture);
+            String path=dir+"\\"+pictureId+".jpg";
+            picture.setPath(path);
+            pictureDao.modify(picture);
             String fileName=pictureId+".jpg";
-            boolean success=pictureUtil.modify(file,fileName,false);
-            if(success==false){
-                throw new Exception("文件加入失败");
-            }
+            pictureUtil.modify(file,fileName,false);
             return true;
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch (Exception e){
+            throw new RuntimeException("无法插入图片");
         }
-        return false;
     }
 
+    /**
+     * 管理员从管理员界面对展示图片进行插入
+     * @param file
+     * @param picture
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean modifyPicture(MultipartFile file, Picture picture) {
+        try{
+            if(picture.getPictureId()<=0||StringUtils.isNullOrEmpty(picture.getPath())){
+                return false;
+            }else{
+
+            }
+        }catch (Exception e){
+            throw new RuntimeException("目前无法更改用户信息");
+        }
         return false;
     }
 
@@ -88,7 +99,12 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public List<Picture> getList() {
-        return null;
+        List<Picture> pictures=pictureDao.getList();
+        if(pictures.size()==0){
+            return null;
+        }else{
+            return pictures;
+        }
     }
 
     @Override

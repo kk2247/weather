@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
 
     private PictureUtil pictureUtil=new PictureUtil();
 
+
     @Override
     public int loginIn(String account, String password) {
         User user=userDao.getUserByAccountAndPassword(account,password);
@@ -43,6 +44,7 @@ public class UserServiceImpl implements UserService {
         return -1;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public int register(User user) {
         if(StringUtils.isEmpty(user.getAccount())==false && StringUtils.isEmpty(user.getPassword())==false){
@@ -83,41 +85,34 @@ public class UserServiceImpl implements UserService {
         return -1;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean fillInformation(User user, MultipartFile file) {
-        if(user.getUserId()<=0){
-            user.setUserId(userDao.getUserByAccount(user.getAccount()).getUserId());
-        }
-        int userId=user.getUserId();
-        userDao.modify(user);
         try{
-            boolean insertIcon=pictureUtil.modify(file,userId+".jpg",true);
-            if(insertIcon==true){
-                return true;
-            }else{
-                throw new RuntimeException("无法正常插入图片");
+            if(user.getUserId()<=0){
+                user.setUserId(userDao.getUserByAccount(user.getAccount()).getUserId());
             }
+            int userId=user.getUserId();
+            userDao.modify(user);
+            pictureUtil.modify(file,userId+".jpg",true);
+            return true;
         }catch (Exception e){
-            throw e;
+            throw new RuntimeException("无法正常写入信息");
         }
-
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean modifyIcon(User user, MultipartFile file) {
-        if(user.getUserId()<=0){
-            user.setUserId(userDao.getUserByAccount(user.getAccount()).getUserId());
-        }
-        int userId=user.getUserId();
         try{
-            boolean insertIcon=pictureUtil.modify(file,userId+".jpg",true);
-            if(insertIcon==true){
-                return true;
-            }else{
-                 throw new RuntimeException("无法正常插入图片");
+            if(user.getUserId()<=0){
+                user.setUserId(userDao.getUserByAccount(user.getAccount()).getUserId());
             }
+            int userId=user.getUserId();
+            pictureUtil.modify(file,userId+".jpg",true);
+            return true;
         }catch (Exception e){
-            throw e;
+            throw new RuntimeException("无法正常插入图片");
         }
     }
 }
