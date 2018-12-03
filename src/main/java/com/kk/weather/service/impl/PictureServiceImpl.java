@@ -109,6 +109,11 @@ public class PictureServiceImpl implements PictureService {
 
     @Override
     public Picture get(int id) {
-        return null;
+        Picture picture=pictureDao.get(id);
+        if(picture==null){
+            return null;
+        }else{
+            return picture;
+        }
     }
 }
