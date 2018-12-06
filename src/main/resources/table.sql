@@ -17,9 +17,10 @@ catalogue varchar(20),
 primary key(picture_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table icon(
-icon_id int auto_increment,
+create table user_weather(
+uw_id int auto_increment,
 user_id int not null,
-picture_id int ,
-primary key (icon_id)
+city varchar(50) ,
+primary key (uw_id)
+foreign key(uw_id) references to user(user_id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

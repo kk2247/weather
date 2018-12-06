@@ -40,8 +40,9 @@ public class UserServiceImpl implements UserService {
         User user=userDao.getUserByAccountAndPassword(account,password);
         if(user!=null){
             return user.getUserId();
+        }else{
+            return -1;
         }
-        return -1;
     }
 
     @Transactional(rollbackFor = Exception.class)

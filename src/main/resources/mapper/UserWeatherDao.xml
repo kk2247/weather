@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kk.weather.dao.UserWeatherDao">
+
+    <select id="getList" resultType="com.kk.weather.entity.UserWeather">
+        select *
+        from user_weather
+    </select>
+
+    <select id="getWeatherByUserId" resultType="com.kk.weather.entity.UserWeather">
+        select *
+        from user_weather
+        where user_id=#{userId}
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uwId"
+            keyColumn="uw_id" parameterType="com.kk.weather.entity.UserWeather">
+        INSERT INTO
+        user_weather
+        (user_id,city)
+        values
+        (#{userId},#{city})
+    </insert>
+
+    <update id="modify" parameterType="com.kk.weather.entity.UserWeather">
+        UPDATE user_weather
+        <set>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="city!=null">city=#{city}</if>
+        </set>
+        WHERE uw_id=#{uwId}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM
+        user_weather
+        WHERE  uw_id=#{id}
+    </delete>
+
+    <select id="get" resultType="com.kk.weather.entity.Icon">
+        select * from icon
+        where icon_id=#{id}
+    </select>
+</mapper>

@@ -63,22 +63,10 @@ public class UserController {
         String passwordMd5=passwordUtil.getMd5(password);
         int userId=userService.loginIn(account,passwordMd5);
         if(userId>0){
-            Cookie cookie1=new Cookie("account",account);
-            cookie1.setMaxAge(60*60*24*10);
-            Cookie cookie2=new Cookie("password",passwordMd5);
-            cookie2.setMaxAge(60*60*24*10);
-            Cookie cookie3=new Cookie("userState","Online");
-            cookie3.setMaxAge(60*60*24*10);
-            Cookie cookie4=new Cookie("id",String.valueOf(userId));
-            cookie4.setMaxAge(60*60*24*10);
-            response.addCookie(cookie1);
-            response.addCookie(cookie2);
-            response.addCookie(cookie3);
-            response.addCookie(cookie4);
-            map.put("sucess","true");
-            return "result"+"("+gson.toJson(map)+")";
+            map.put("result","true");
+            return "("+gson.toJson(map)+")";
         }else{
-            map.put("sucess","false");
+            map.put("result","false");
             return "("+gson.toJson(map)+")";
         }
     }
@@ -97,15 +85,16 @@ public class UserController {
         user.setAccount(account);
         user.setPassword(password);
         if(StringUtils.isEmpty(user.getAccount())||StringUtils.isEmpty(user.getPassword())){
-            map.put("sucess","illegality");
+            map.put("result","illegality");
             return map;
         }else{
             user.setPassword(passwordUtil.getMd5(user.getPassword()));
             int userId = userService.register(user);
             if(userId>0){
-                map.put("sucess","treu");
+
+                map.put("result","true");
             }else{
-                map.put("sucess","false");
+                map.put("result","false");
             }
             return map;
         }
@@ -136,9 +125,9 @@ public class UserController {
         user.setConstellation(constellation);
         boolean success=userService.fillInformation(user,file);
         if(success==false){
-            map.put("sucess","failed");
+            map.put("result","false");
         }else{
-            map.put("sucess","true");
+            map.put("result","true");
         }
         return "("+gson.toJson(map)+")";
 
@@ -160,7 +149,7 @@ public class UserController {
             if(StringUtils.isEmpty(account)==false){
                 user.setAccount(account);
             }else{
-                map.put("sucess","illegality");
+                map.put("result","illegality");
                 return "("+gson.toJson(map)+")";
             }
         }else{
@@ -168,9 +157,9 @@ public class UserController {
         }
         boolean success=userService.modifyIcon(user,file);
         if(success==false){
-            map.put("sucess","false");
+            map.put("result","false");
         }else{
-            map.put("sucess","true");
+            map.put("result","true");
         }
         return "("+gson.toJson(map)+")";
     }
@@ -189,23 +178,10 @@ public class UserController {
         Cookie[] cookies = request.getCookies();
         if (null==cookies) {
             System.out.println("没有cookie==============");
-            map.put("sucess","failed");
+            map.put("result","false");
         } else {
-            for(Cookie cookie : cookies){
-                if(cookie.getName().equals("account")||
-                        cookie.getName().equals("password")||
-                        cookie.getName().equals("userState")||
-                        cookie.getName().equals("id")){
-                    cookie.setValue(null);
-                    cookie.setMaxAge(0);
-                    cookie.setPath("/");
-                    System.out.println("被删除的cookie名字为:"+cookie.getName());
-                    response.addCookie(cookie);
-                    break;
-                }
-            }
+            map.put("result","true");
         }
-        map.put("sucess","true");
         return "("+gson.toJson(map)+")";
     }
 
