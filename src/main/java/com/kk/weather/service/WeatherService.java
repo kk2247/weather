@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Service
 public interface WeatherService {
-    List<Weather> getWeatherByUserId(int userId);
+    List<List<Weather>> getWeatherByUserId(int userId);
     List<Weather> getWeatherByCity(String cityName);
     List<UserWeather> getCityByUserId(int userId);
     boolean insertCity(UserWeather userWeather);
